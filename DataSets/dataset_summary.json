@@ -1,0 +1,20 @@
+{
+  "journeys": 20000,
+  "services": 30,
+  "journey_service_records": 76765,
+  "mean_services_per_journey": 3.838,
+  "median_services_per_journey": 4.0,
+  "min_services_per_journey": 1,
+  "max_services_per_journey": 9,
+  "random_seed": 20261107,
+  "pattern_distribution": {
+    "Education_Scholarship": 0.1794,
+    "Agriculture_Support": 0.1421,
+    "Pension_Support": 0.1328,
+    "Employment_Skills": 0.1289,
+    "Property_Transaction": 0.1208,
+    "Healthcare_Access": 0.119,
+    "Transport_Business": 0.0887,
+    "Civil_Registration": 0.0884
+  }
+}
