@@ -1,0 +1,45 @@
+Synthetic_Journey_Pattern,Pattern_Mixture_Weight,Service_ID,Service_Name,Inclusion_Probability_Within_Pattern,Interpretation
+Education_Scholarship,0.18,S01,Scholarship Application,0.98,Simulation design assumption; not an observed real-world dependency.
+Education_Scholarship,0.18,S02,Student Registration,0.55,Simulation design assumption; not an observed real-world dependency.
+Education_Scholarship,0.18,S03,Income Certificate,0.78,Simulation design assumption; not an observed real-world dependency.
+Education_Scholarship,0.18,S04,Caste Certificate,0.42,Simulation design assumption; not an observed real-world dependency.
+Education_Scholarship,0.18,S05,Aadhaar Verification,0.86,Simulation design assumption; not an observed real-world dependency.
+Education_Scholarship,0.18,S06,Bank Account Verification,0.72,Simulation design assumption; not an observed real-world dependency.
+Pension_Support,0.13,S07,Pension Application,0.98,Simulation design assumption; not an observed real-world dependency.
+Pension_Support,0.13,S08,Life Certificate,0.48,Simulation design assumption; not an observed real-world dependency.
+Pension_Support,0.13,S03,Income Certificate,0.38,Simulation design assumption; not an observed real-world dependency.
+Pension_Support,0.13,S05,Aadhaar Verification,0.88,Simulation design assumption; not an observed real-world dependency.
+Pension_Support,0.13,S06,Bank Account Verification,0.82,Simulation design assumption; not an observed real-world dependency.
+Pension_Support,0.13,S09,Age Verification,0.32,Simulation design assumption; not an observed real-world dependency.
+Agriculture_Support,0.14,S15,Farmer Registration,0.98,Simulation design assumption; not an observed real-world dependency.
+Agriculture_Support,0.14,S12,Land Records,0.62,Simulation design assumption; not an observed real-world dependency.
+Agriculture_Support,0.14,S16,Crop Insurance,0.68,Simulation design assumption; not an observed real-world dependency.
+Agriculture_Support,0.14,S17,Soil Health Card,0.52,Simulation design assumption; not an observed real-world dependency.
+Agriculture_Support,0.14,S06,Bank Account Verification,0.48,Simulation design assumption; not an observed real-world dependency.
+Agriculture_Support,0.14,S05,Aadhaar Verification,0.45,Simulation design assumption; not an observed real-world dependency.
+Property_Transaction,0.12,S13,Property Registration,0.98,Simulation design assumption; not an observed real-world dependency.
+Property_Transaction,0.12,S12,Land Records,0.84,Simulation design assumption; not an observed real-world dependency.
+Property_Transaction,0.12,S14,Encumbrance Certificate,0.58,Simulation design assumption; not an observed real-world dependency.
+Property_Transaction,0.12,S05,Aadhaar Verification,0.82,Simulation design assumption; not an observed real-world dependency.
+Property_Transaction,0.12,S03,Income Certificate,0.25,Simulation design assumption; not an observed real-world dependency.
+Employment_Skills,0.13,S18,Employment Registration,0.98,Simulation design assumption; not an observed real-world dependency.
+Employment_Skills,0.13,S19,Skill Development Registration,0.68,Simulation design assumption; not an observed real-world dependency.
+Employment_Skills,0.13,S20,Job Application,0.46,Simulation design assumption; not an observed real-world dependency.
+Employment_Skills,0.13,S05,Aadhaar Verification,0.58,Simulation design assumption; not an observed real-world dependency.
+Employment_Skills,0.13,S03,Income Certificate,0.18,Simulation design assumption; not an observed real-world dependency.
+Healthcare_Access,0.12,S21,Health Scheme Registration,0.98,Simulation design assumption; not an observed real-world dependency.
+Healthcare_Access,0.12,S22,Hospital Appointment,0.62,Simulation design assumption; not an observed real-world dependency.
+Healthcare_Access,0.12,S05,Aadhaar Verification,0.6,Simulation design assumption; not an observed real-world dependency.
+Healthcare_Access,0.12,S06,Bank Account Verification,0.32,Simulation design assumption; not an observed real-world dependency.
+Healthcare_Access,0.12,S11,Family ID Registration,0.22,Simulation design assumption; not an observed real-world dependency.
+Civil_Registration,0.09,S23,Birth Certificate,0.62,Simulation design assumption; not an observed real-world dependency.
+Civil_Registration,0.09,S24,Death Certificate,0.38,Simulation design assumption; not an observed real-world dependency.
+Civil_Registration,0.09,S05,Aadhaar Verification,0.58,Simulation design assumption; not an observed real-world dependency.
+Civil_Registration,0.09,S09,Age Verification,0.35,Simulation design assumption; not an observed real-world dependency.
+Civil_Registration,0.09,S11,Family ID Registration,0.42,Simulation design assumption; not an observed real-world dependency.
+Transport_Business,0.09,S25,Driving Licence,0.52,Simulation design assumption; not an observed real-world dependency.
+Transport_Business,0.09,S26,Vehicle Registration,0.48,Simulation design assumption; not an observed real-world dependency.
+Transport_Business,0.09,S29,Business Registration,0.4,Simulation design assumption; not an observed real-world dependency.
+Transport_Business,0.09,S30,Trade Licence,0.35,Simulation design assumption; not an observed real-world dependency.
+Transport_Business,0.09,S05,Aadhaar Verification,0.52,Simulation design assumption; not an observed real-world dependency.
+Transport_Business,0.09,S03,Income Certificate,0.16,Simulation design assumption; not an observed real-world dependency.

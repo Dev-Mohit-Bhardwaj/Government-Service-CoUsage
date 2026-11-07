@@ -1,0 +1,116 @@
+{
+  "dataset_type": "synthetic_simulation",
+  "purpose": "Develop and test service co-usage discovery pipeline; not evidence of actual citizen behaviour.",
+  "n_journeys": 20000,
+  "random_seed": 20261107,
+  "journey_pattern_weights": {
+    "Education_Scholarship": 0.18,
+    "Pension_Support": 0.13,
+    "Agriculture_Support": 0.14,
+    "Property_Transaction": 0.12,
+    "Employment_Skills": 0.13,
+    "Healthcare_Access": 0.12,
+    "Civil_Registration": 0.09,
+    "Transport_Business": 0.09
+  },
+  "pattern_service_inclusion_probabilities": {
+    "Education_Scholarship": {
+      "S01": 0.98,
+      "S02": 0.55,
+      "S03": 0.78,
+      "S04": 0.42,
+      "S05": 0.86,
+      "S06": 0.72
+    },
+    "Pension_Support": {
+      "S07": 0.98,
+      "S08": 0.48,
+      "S03": 0.38,
+      "S05": 0.88,
+      "S06": 0.82,
+      "S09": 0.32
+    },
+    "Agriculture_Support": {
+      "S15": 0.98,
+      "S12": 0.62,
+      "S16": 0.68,
+      "S17": 0.52,
+      "S06": 0.48,
+      "S05": 0.45
+    },
+    "Property_Transaction": {
+      "S13": 0.98,
+      "S12": 0.84,
+      "S14": 0.58,
+      "S05": 0.82,
+      "S03": 0.25
+    },
+    "Employment_Skills": {
+      "S18": 0.98,
+      "S19": 0.68,
+      "S20": 0.46,
+      "S05": 0.58,
+      "S03": 0.18
+    },
+    "Healthcare_Access": {
+      "S21": 0.98,
+      "S22": 0.62,
+      "S05": 0.6,
+      "S06": 0.32,
+      "S11": 0.22
+    },
+    "Civil_Registration": {
+      "S23": 0.62,
+      "S24": 0.38,
+      "S05": 0.58,
+      "S09": 0.35,
+      "S11": 0.42
+    },
+    "Transport_Business": {
+      "S25": 0.52,
+      "S26": 0.48,
+      "S29": 0.4,
+      "S30": 0.35,
+      "S05": 0.52,
+      "S03": 0.16
+    }
+  },
+  "background_service_inclusion_probabilities": {
+    "S01": 0.012,
+    "S02": 0.012,
+    "S03": 0.022,
+    "S04": 0.012,
+    "S05": 0.035,
+    "S06": 0.025,
+    "S07": 0.012,
+    "S08": 0.012,
+    "S09": 0.012,
+    "S10": 0.012,
+    "S11": 0.018,
+    "S12": 0.012,
+    "S13": 0.012,
+    "S14": 0.012,
+    "S15": 0.012,
+    "S16": 0.012,
+    "S17": 0.012,
+    "S18": 0.012,
+    "S19": 0.012,
+    "S20": 0.012,
+    "S21": 0.012,
+    "S22": 0.012,
+    "S23": 0.012,
+    "S24": 0.012,
+    "S25": 0.012,
+    "S26": 0.012,
+    "S27": 0.025,
+    "S28": 0.012,
+    "S29": 0.012,
+    "S30": 0.012
+  },
+  "noise": {
+    "probability_of_adding_unrelated_service": 0.12,
+    "extra_services_when_noise_occurs": "1 with probability 0.85, otherwise 2",
+    "note": "Noise is intentionally included to avoid perfectly deterministic baskets."
+  },
+  "important_caveat": "Journey types and probabilities are illustrative assumptions. Do not report discovered rules as real citizen behaviour."
+}

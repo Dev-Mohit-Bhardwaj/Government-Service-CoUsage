@@ -1,0 +1,31 @@
+Service_ID,Service_Name,Category,Illustrative_Platform_ID,Illustrative_Platform_Name,Platform_Note
+S01,Scholarship Application,Education,P01,Illustrative Platform 01,Synthetic placeholder; replace with verified real platform mapping before real-world interpretation.
+S02,Student Registration,Education,P01,Illustrative Platform 01,Synthetic placeholder; replace with verified real platform mapping before real-world interpretation.
+S03,Income Certificate,Revenue,P02,Illustrative Platform 02,Synthetic placeholder; replace with verified real platform mapping before real-world interpretation.
+S04,Caste Certificate,Revenue,P02,Illustrative Platform 02,Synthetic placeholder; replace with verified real platform mapping before real-world interpretation.
+S05,Aadhaar Verification,Identity,P03,Illustrative Platform 03,Synthetic placeholder; replace with verified real platform mapping before real-world interpretation.
+S06,Bank Account Verification,Financial,P04,Illustrative Platform 04,Synthetic placeholder; replace with verified real platform mapping before real-world interpretation.
+S07,Pension Application,Social Welfare,P05,Illustrative Platform 05,Synthetic placeholder; replace with verified real platform mapping before real-world interpretation.
+S08,Life Certificate,Social Welfare,P05,Illustrative Platform 05,Synthetic placeholder; replace with verified real platform mapping before real-world interpretation.
+S09,Age Verification,Identity,P03,Illustrative Platform 03,Synthetic placeholder; replace with verified real platform mapping before real-world interpretation.
+S10,Ration Card Service,Food and Civil Supplies,P06,Illustrative Platform 06,Synthetic placeholder; replace with verified real platform mapping before real-world interpretation.
+S11,Family ID Registration,Civil Administration,P06,Illustrative Platform 06,Synthetic placeholder; replace with verified real platform mapping before real-world interpretation.
+S12,Land Records,Land and Revenue,P02,Illustrative Platform 02,Synthetic placeholder; replace with verified real platform mapping before real-world interpretation.
+S13,Property Registration,Land and Revenue,P07,Illustrative Platform 07,Synthetic placeholder; replace with verified real platform mapping before real-world interpretation.
+S14,Encumbrance Certificate,Land and Revenue,P07,Illustrative Platform 07,Synthetic placeholder; replace with verified real platform mapping before real-world interpretation.
+S15,Farmer Registration,Agriculture,P08,Illustrative Platform 08,Synthetic placeholder; replace with verified real platform mapping before real-world interpretation.
+S16,Crop Insurance,Agriculture,P08,Illustrative Platform 08,Synthetic placeholder; replace with verified real platform mapping before real-world interpretation.
+S17,Soil Health Card,Agriculture,P08,Illustrative Platform 08,Synthetic placeholder; replace with verified real platform mapping before real-world interpretation.
+S18,Employment Registration,Employment,P09,Illustrative Platform 09,Synthetic placeholder; replace with verified real platform mapping before real-world interpretation.
+S19,Skill Development Registration,Employment,P09,Illustrative Platform 09,Synthetic placeholder; replace with verified real platform mapping before real-world interpretation.
+S20,Job Application,Employment,P10,Illustrative Platform 10,Synthetic placeholder; replace with verified real platform mapping before real-world interpretation.
+S21,Health Scheme Registration,Healthcare,P11,Illustrative Platform 11,Synthetic placeholder; replace with verified real platform mapping before real-world interpretation.
+S22,Hospital Appointment,Healthcare,P12,Illustrative Platform 12,Synthetic placeholder; replace with verified real platform mapping before real-world interpretation.
+S23,Birth Certificate,Civil Registration,P13,Illustrative Platform 13,Synthetic placeholder; replace with verified real platform mapping before real-world interpretation.
+S24,Death Certificate,Civil Registration,P13,Illustrative Platform 13,Synthetic placeholder; replace with verified real platform mapping before real-world interpretation.
+S25,Driving Licence,Transport,P14,Illustrative Platform 14,Synthetic placeholder; replace with verified real platform mapping before real-world interpretation.
+S26,Vehicle Registration,Transport,P14,Illustrative Platform 14,Synthetic placeholder; replace with verified real platform mapping before real-world interpretation.
+S27,Utility Bill Payment,Utilities,P15,Illustrative Platform 15,Synthetic placeholder; replace with verified real platform mapping before real-world interpretation.
+S28,Water Connection,Utilities,P15,Illustrative Platform 15,Synthetic placeholder; replace with verified real platform mapping before real-world interpretation.
+S29,Business Registration,Business Services,P16,Illustrative Platform 16,Synthetic placeholder; replace with verified real platform mapping before real-world interpretation.
+S30,Trade Licence,Business Services,P16,Illustrative Platform 16,Synthetic placeholder; replace with verified real platform mapping before real-world interpretation.
