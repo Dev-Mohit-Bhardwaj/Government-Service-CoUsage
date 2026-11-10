@@ -1,4 +1,5 @@
 import streamlit as st
+from modules.data_validator import validate_datasets
 
 from config import APP_TITLE, APP_DESCRIPTION
 from modules.data_loader import load_all_datasets
@@ -45,6 +46,46 @@ try:
     services = datasets["services"]
 
     st.success("All datasets loaded successfully!")
+
+    # ----------------------------------
+# DATASET VALIDATION
+# ----------------------------------
+
+    st.divider()
+
+    st.subheader("🔍 Dataset Quality & Validation")
+
+    validation_results = validate_datasets(datasets)
+
+    total_checks = len(validation_results)
+
+    passed_checks = (
+        validation_results["Status"] == "PASS"
+    ).sum()
+
+    failed_checks = total_checks - passed_checks
+
+    col1, col2, col3 = st.columns(3)
+
+    col1.metric("Total Checks", total_checks)
+
+    col2.metric("Passed", int(passed_checks))
+
+    col3.metric("Failed", int(failed_checks))
+
+    st.dataframe(
+        validation_results,
+        use_container_width=True,
+        hide_index=True
+    )
+
+    if failed_checks == 0:
+        st.success("All dataset validation checks passed!")
+
+    else:
+        st.warning(
+            f"{failed_checks} validation checks require attention."
+        )
 
     # ----------------------------------
     # DATASET OVERVIEW
@@ -107,6 +148,8 @@ try:
     st.caption(
         "Showing the first 10 records."
     )
+
+    
 
 except Exception as e:
 
