@@ -95,14 +95,14 @@ def validate_datasets(datasets):
     actual_counts = (
         long_data.groupby("Journey_ID")
         .size()
-        .rename("Actual_Count")
+        .reset_index(name="Actual_Count")
     )
 
-    expected_counts = journeys.set_index("Journey_ID")["Service_Count"]
-
-    comparison = pd.concat(
-        [expected_counts, actual_counts],
-        axis=1
+    comparison = pd.merge(
+        journeys[["Journey_ID", "Service_Count"]],
+        actual_counts,
+        on="Journey_ID",
+        how="outer"
     )
 
     count_mismatches = (
@@ -152,7 +152,7 @@ def validate_datasets(datasets):
 
     missing_columns = set(service_columns) - set(basket.columns)
 
-    if not missing_columns:
+    if not missing_columns and not basket["Journey_ID"].duplicated().any():
 
         reconstructed = pd.crosstab(
             long_data["Journey_ID"],
