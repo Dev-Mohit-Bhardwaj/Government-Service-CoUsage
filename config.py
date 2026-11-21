@@ -28,9 +28,9 @@ DEFAULT_MIN_CONFIDENCE = 0.30
 DEFAULT_MIN_LIFT = 1.0
 
 # Application information
-APP_TITLE = "Government Service Co-Usage Discovery"
+APP_TITLE = "PROJECT KRATOS — Government Service Intelligence & Recommendation System"
 
 APP_DESCRIPTION = (
-    "Discovering associations and integration opportunities "
-    "across government digital services."
+    "Discovering complementary service associations, cross-platform integration "
+    "opportunities, and explainable recommendations across distributed government digital services."
 )
