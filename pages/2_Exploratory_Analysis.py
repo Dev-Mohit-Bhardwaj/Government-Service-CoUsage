@@ -2,7 +2,6 @@ import streamlit as st
 import plotly.express as px
 
 from modules.data_loader import load_all_datasets
-
 from modules.exploratory_data_analysis import (
     get_service_distribution,
     get_journey_length_distribution,
@@ -17,7 +16,7 @@ from modules.exploratory_data_analysis import (
 # ------------------------------------------
 
 st.set_page_config(
-    page_title="Exploratory Data Analysis",
+    page_title="Exploratory Data Analysis | Project KRATOS",
     page_icon="📊",
     layout="wide"
 )
@@ -31,20 +30,20 @@ st.title("📊 Exploratory Data Analysis")
 
 st.write(
     "Explore service popularity, citizen journey characteristics, "
-    "frequently co-used services and service categories."
+    "frequently co-used services, and service categories."
 )
 
 st.info(
-    "Dataset notice: The current dataset contains synthetic "
+    "⚠️ **Dataset notice**: The current dataset contains synthetic "
     "journeys generated for project development and demonstration. "
-    "Results should not be interpreted as actual citizen behaviour."
+    "Results should not be interpreted as empirical citizen behaviour."
 )
 
 st.divider()
 
 
 # ------------------------------------------
-# LOAD DATASETS
+# LOAD DATASETS & CACHED ANALYTICS
 # ------------------------------------------
 
 @st.cache_data
@@ -52,15 +51,18 @@ def get_datasets():
     return load_all_datasets()
 
 
-try:
+@st.cache_data
+def get_cached_frequent_pairs(long_data):
+    return get_frequent_service_pairs(long_data)
 
+
+try:
     datasets = get_datasets()
 
     journeys = datasets["journeys"]
     long_data = datasets["long_data"]
     basket = datasets["basket"]
     services = datasets["services"]
-
 
     # ------------------------------------------
     # OVERVIEW METRICS
@@ -71,33 +73,15 @@ try:
     total_journeys = journeys["Journey_ID"].nunique()
     total_services = services["Service_ID"].nunique()
     total_records = len(long_data)
-
     avg_services = journeys["Service_Count"].mean()
 
     col1, col2, col3, col4 = st.columns(4)
-
-    col1.metric(
-        "Total Journeys",
-        f"{total_journeys:,}"
-    )
-
-    col2.metric(
-        "Total Services",
-        total_services
-    )
-
-    col3.metric(
-        "Journey-Service Records",
-        f"{total_records:,}"
-    )
-
-    col4.metric(
-        "Avg. Services / Journey",
-        f"{avg_services:.2f}"
-    )
+    col1.metric("Total Journeys", f"{total_journeys:,}")
+    col2.metric("Total Services", total_services)
+    col3.metric("Journey-Service Records", f"{total_records:,}")
+    col4.metric("Avg. Services / Journey", f"{avg_services:.2f}")
 
     st.divider()
-
 
     # ------------------------------------------
     # 1. SERVICE POPULARITY DISTRIBUTION
@@ -119,15 +103,11 @@ try:
     )
 
     if selected_category != "All Categories":
-
         filtered_services = service_distribution[
             service_distribution["Category"] == selected_category
         ]
-
     else:
-
         filtered_services = service_distribution
-
 
     top_n = st.slider(
         "Number of services to display",
@@ -160,7 +140,6 @@ try:
     )
 
     st.divider()
-
 
     # ------------------------------------------
     # 2. JOURNEY LENGTH DISTRIBUTION
@@ -195,14 +174,14 @@ try:
 
     st.divider()
 
-
     # ------------------------------------------
     # 3. FREQUENT SERVICE PAIRS
     # ------------------------------------------
 
     st.header("3. Frequently Co-Used Service Pairs")
 
-    service_pairs = get_frequent_service_pairs(long_data)
+    with st.spinner("Analyzing co-used service pairs..."):
+        service_pairs = get_cached_frequent_pairs(long_data)
 
     top_pairs = service_pairs.head(10).copy()
 
@@ -237,7 +216,6 @@ try:
 
     st.divider()
 
-
     # ------------------------------------------
     # 4. SERVICE CATEGORY DISTRIBUTION
     # ------------------------------------------
@@ -262,7 +240,6 @@ try:
     )
 
     st.divider()
-
 
     # ------------------------------------------
     # 5. SYNTHETIC JOURNEY PATTERNS
@@ -294,8 +271,8 @@ try:
 
     st.warning(
         "Journey types are synthetic generation metadata. "
-        "They are used for exploratory analysis only and will "
-        "not be used as inputs to association rule mining."
+        "They are used for exploratory analysis only and are "
+        "strictly excluded from association rule mining inputs."
     )
 
     st.divider()
@@ -304,7 +281,5 @@ try:
         "Exploratory Data Analysis completed successfully!"
     )
 
-
 except Exception as e:
-
     st.error(f"EDA Application Error: {e}")
