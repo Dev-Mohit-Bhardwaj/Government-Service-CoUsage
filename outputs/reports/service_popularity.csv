@@ -1,0 +1,31 @@
+Service_ID,Service_Name,Category,Journey_Count,Popularity_Percentage,Rank
+S05,Aadhaar Verification,Identity,13622,68.11,1
+S06,Bank Account Verification,Financial,7217,36.085,2
+S03,Income Certificate,Revenue,5385,26.924999999999997,3
+S12,Land Records,Land and Revenue,4054,20.27,4
+S01,Scholarship Application,Education,3784,18.92,5
+S15,Farmer Registration,Agriculture,3090,15.45,6
+S18,Employment Registration,Employment,2881,14.405000000000001,7
+S07,Pension Application,Social Welfare,2862,14.31,8
+S13,Property Registration,Land and Revenue,2664,13.320000000000002,9
+S21,Health Scheme Registration,Healthcare,2649,13.245000000000001,10
+S02,Student Registration,Education,2286,11.43,11
+S16,Crop Insurance,Agriculture,2222,11.110000000000001,12
+S19,Skill Development Registration,Employment,2079,10.395,13
+S04,Caste Certificate,Revenue,1829,9.145,14
+S09,Age Verification,Identity,1801,9.005,15
+S22,Hospital Appointment,Healthcare,1789,8.945,16
+S17,Soil Health Card,Agriculture,1774,8.870000000000001,17
+S11,Family ID Registration,Civil Administration,1701,8.505,18
+S14,Encumbrance Certificate,Land and Revenue,1663,8.315,19
+S08,Life Certificate,Social Welfare,1615,8.075000000000001,20
+S20,Job Application,Employment,1566,7.829999999999999,21
+S23,Birth Certificate,Civil Registration,1502,7.51,22
+S25,Driving Licence,Transport,1298,6.49,23
+S26,Vehicle Registration,Transport,1146,5.7299999999999995,24
+S24,Death Certificate,Civil Registration,1019,5.095000000000001,25
+S29,Business Registration,Business Services,999,4.995,26
+S30,Trade Licence,Business Services,960,4.8,27
+S27,Utility Bill Payment,Utilities,612,3.06,28
+S10,Ration Card Service,Food and Civil Supplies,357,1.7850000000000001,29
+S28,Water Connection,Utilities,339,1.695,30
