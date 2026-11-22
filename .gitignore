@@ -30,6 +30,13 @@ MANIFEST
 venv/
 env/
 ENV/
+.venv/
+
+# Node / Frontend
+node_modules/
+frontend/node_modules/
+frontend/dist/
+
 
 # Pytest / Test runner
 .pytest_cache/
