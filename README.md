@@ -87,17 +87,43 @@ Government-Service-CoUsage-main/
 
 ## 🚀 Installation & Running
 
-### 1. Environment Setup
+### Option A: Futuristic Web Application (React + Vite + Three.js + FastAPI) [RECOMMENDED]
+
+The new immersive UI is powered by a React 18 + Vite frontend with Three.js (CIVIC ORBIT 3D digital globe), Framer Motion, and a high-performance FastAPI analytics layer.
+
+#### 1. Single-Command Launch (Backend + Built Frontend)
 ```bash
-# Clone or navigate to repository root
-cd Government-Service-CoUsage-main
+# Run FastAPI server (automatically serves API at /api and built React UI at /)
+.\.venv\Scripts\python -m uvicorn api.main:app --host 127.0.0.1 --port 8000
+```
+Open **`http://127.0.0.1:8000`** in your browser.
 
-# Activate virtual environment
-.\venv\Scripts\Activate.ps1   # Windows PowerShell
-# or: source venv/bin/activate # Linux / macOS
+#### 2. Development Mode (With Hot Reloading)
+```bash
+# Terminal 1: Start FastAPI backend
+.\.venv\Scripts\python -m uvicorn api.main:app --host 127.0.0.1 --port 8000 --reload
 
-# Install dependencies if needed
-pip install -r requirements.txt
+# Terminal 2: Start Vite Dev Server
+cd frontend
+npm run dev
+```
+Open **`http://localhost:3000`** in your browser.
+
+---
+
+### Option B: Legacy Streamlit Application [FALLBACK]
+```bash
+.\.venv\Scripts\streamlit run app.py
+```
+Open **`http://localhost:8501`** in your browser.
+
+---
+
+### 🧪 Running Automated Tests
+```bash
+.\.venv\Scripts\python -m pytest
+```
+All 51 unit and integration tests across data validation, preprocessing, popularity analysis, association mining, rule evaluation, and recommendation logic will run and report status.
 ```
 
 ### 2. Run Test Suite
