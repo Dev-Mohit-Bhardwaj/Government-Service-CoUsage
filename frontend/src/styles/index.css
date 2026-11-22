@@ -1,0 +1,119 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  .dark body {
+    background-color: #050816;
+    color: #F8FAFC;
+  }
+
+  .light body {
+    background-color: #F8FAFC;
+    color: #0F172A;
+  }
+}
+
+/* Glassmorphism Surfaces — Dynamic Dark & Light Theme */
+.dark .glass-panel {
+  background: rgba(11, 18, 36, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 217, 255, 0.12);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.light .glass-panel {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.06);
+}
+
+.dark .glass-panel-hover {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dark .glass-panel-hover:hover {
+  background: rgba(16, 26, 52, 0.9);
+  border-color: rgba(0, 217, 255, 0.35);
+  box-shadow: 0 12px 35px -10px rgba(0, 217, 255, 0.2);
+}
+
+.light .glass-panel-hover {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.light .glass-panel-hover:hover {
+  background: #FFFFFF;
+  border-color: rgba(2, 132, 199, 0.3);
+  box-shadow: 0 16px 36px -10px rgba(2, 132, 199, 0.12);
+}
+
+/* Custom Scrollbars */
+.dark ::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #050816;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(0, 217, 255, 0.2);
+  border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 217, 255, 0.5);
+}
+
+.light ::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+.light ::-webkit-scrollbar-track {
+  background: #F1F5F9;
+}
+
+.light ::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.3);
+  border-radius: 4px;
+}
+
+.light ::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.55);
+}
+
+/* Futuristic Glow Badges */
+.badge-cyan {
+  background: rgba(0, 217, 255, 0.1);
+  color: #00D9FF;
+  border: 1px solid rgba(0, 217, 255, 0.25);
+}
+
+.light .badge-cyan {
+  background: rgba(2, 132, 199, 0.1);
+  color: #0284C7;
+  border: 1px solid rgba(2, 132, 199, 0.25);
+}
+
+.badge-violet {
+  background: rgba(108, 99, 255, 0.1);
+  color: #A78BFA;
+  border: 1px solid rgba(108, 99, 255, 0.25);
+}
+
+.light .badge-violet {
+  background: rgba(99, 102, 241, 0.1);
+  color: #4F46E5;
+  border: 1px solid rgba(99, 102, 241, 0.25);
+}
