@@ -3,8 +3,14 @@ from pathlib import Path
 # Root directory of the project
 BASE_DIR = Path(__file__).resolve().parent
 
-# Main directories
-DATASET_DIR = BASE_DIR / "Dataset"
+# Main directories (robust case-insensitivity across Linux & Windows)
+if (BASE_DIR / "DataSet").exists():
+    DATASET_DIR = BASE_DIR / "DataSet"
+elif (BASE_DIR / "Dataset").exists():
+    DATASET_DIR = BASE_DIR / "Dataset"
+else:
+    DATASET_DIR = BASE_DIR / "DataSet"
+
 OUTPUT_DIR = BASE_DIR / "outputs"
 
 REPORTS_DIR = OUTPUT_DIR / "reports"

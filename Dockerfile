@@ -41,6 +41,11 @@ COPY config.py .
 COPY DataSet/ ./DataSet/
 COPY modules/ ./modules/
 COPY api/ ./api/
+COPY outputs/ ./outputs/
+
+# Create symlink so both DataSet and Dataset resolve seamlessly on Linux, and ensure output dirs exist
+RUN ln -s /app/DataSet /app/Dataset 2>/dev/null || true && \
+    mkdir -p outputs/reports outputs/charts outputs/generated_rules
 
 # Copy compiled React static bundle from Stage 1
 COPY --from=frontend-builder /app/frontend/dist ./frontend/dist

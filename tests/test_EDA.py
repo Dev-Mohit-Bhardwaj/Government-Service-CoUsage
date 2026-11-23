@@ -11,8 +11,7 @@ from modules.exploratory_data_analysis import (
 
 
 # Load datasets
-BASE_DIR = Path(__file__).resolve().parent.parent
-DATASET_DIR = BASE_DIR / "Dataset"
+from config import DATASET_DIR
 
 journeys = pd.read_csv(DATASET_DIR / "citizen_journeys.csv")
 journey_services = pd.read_csv(

@@ -1,10 +1,20 @@
 import os
 import sys
+import logging
+import traceback
 from pathlib import Path
 from typing import List, Optional, Dict, Any
-from fastapi import FastAPI, Query, HTTPException, Body
+from fastapi import FastAPI, Query, HTTPException, Body, Request
+from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(name)s: %(message)s"
+)
+logger = logging.getLogger("kratos_api")
 
 # Ensure root directory is in sys.path
 ROOT_DIR = Path(__file__).resolve().parent.parent
@@ -38,7 +48,7 @@ from modules.rule_evaluation import (
 from modules.integration_analyzer import analyze_integration_opportunities, DEFAULT_WEIGHTS
 from modules.recommendation_engine import recommend_services
 from modules.explanation_engine import explain_all_recommendations
-from config import DEFAULT_MIN_SUPPORT, DEFAULT_MIN_CONFIDENCE, DEFAULT_MIN_LIFT
+from config import DEFAULT_MIN_SUPPORT, DEFAULT_MIN_CONFIDENCE, DEFAULT_MIN_LIFT, DATASET_DIR
 
 # Initialize FastAPI App
 app = FastAPI(
@@ -46,6 +56,19 @@ app = FastAPI(
     description="Government Service Intelligence & Recommendation System API Layer",
     version="2.0.0",
 )
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    logger.error(f"Global unhandled error on {request.method} {request.url.path}: {exc}")
+    logger.error(traceback.format_exc())
+    return JSONResponse(
+        status_code=500,
+        content={
+            "detail": str(exc),
+            "type": type(exc).__name__,
+            "path": str(request.url.path)
+        }
+    )
 
 # Enable CORS for React Vite frontend development and production
 app.add_middleware(
@@ -65,7 +88,14 @@ _CACHED_ITEMSETS = {}
 def get_datasets():
     global _DATASETS
     if _DATASETS is None:
-        _DATASETS = load_all_datasets()
+        try:
+            logger.info("Initializing datasets from %s...", DATASET_DIR)
+            _DATASETS = load_all_datasets()
+            logger.info("Datasets initialized: %d journeys, %d services",
+                        len(_DATASETS["journeys"]), len(_DATASETS["services"]))
+        except Exception as e:
+            logger.error("Failed to load datasets from %s: %s", DATASET_DIR, e, exc_info=True)
+            raise
     return _DATASETS
 
 def get_basket():
