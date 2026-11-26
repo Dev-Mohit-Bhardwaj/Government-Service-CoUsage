@@ -1,7 +1,7 @@
 """
 Unit tests for Association Mining module (Project KRATOS).
-Verifies Apriori and FP-Growth implementations, edge cases, validations,
-and algorithm equivalence.
+Verifies Apriori, FP-Growth, H-Mine, and ECLAT implementations, edge cases,
+validations, and 4-way algorithm equivalence.
 """
 
 import pytest
@@ -9,7 +9,11 @@ import pandas as pd
 from modules.association_mining import (
     run_apriori,
     run_fpgrowth,
+    run_hmine,
+    run_eclat,
+    run_algorithm,
     compare_algorithms,
+    benchmark_support_sweep,
     format_itemsets_with_names,
     validate_mining_parameters,
 )
@@ -68,48 +72,95 @@ def test_validation_invalid_basket():
         validate_mining_parameters(pd.DataFrame(), min_support=0.1)
 
 
-def test_apriori_fpgrowth_equivalence(sample_basket):
-    """Verify Apriori and FP-Growth produce identical frequent itemsets."""
+def test_four_algorithm_equivalence(sample_basket):
+    """Verify Apriori, FP-Growth, H-Mine, and ECLAT produce identical itemsets & supports."""
     ap_res = run_apriori(sample_basket, min_support=0.3)
     fp_res = run_fpgrowth(sample_basket, min_support=0.3)
+    hm_res = run_hmine(sample_basket, min_support=0.3)
+    ec_res = run_eclat(sample_basket, min_support=0.3)
 
-    assert not ap_res.empty
-    assert not fp_res.empty
-    assert len(ap_res) == len(fp_res)
+    for res in (ap_res, fp_res, hm_res, ec_res):
+        assert not res.empty
+        assert len(res) == len(ap_res)
+        assert list(res.columns) == ["support", "itemsets", "length"]
 
-    ap_sets = set(ap_res["itemsets"])
-    fp_sets = set(fp_res["itemsets"])
-    assert ap_sets == fp_sets
+    ap_map = dict(zip(ap_res["itemsets"], ap_res["support"]))
+    for res in (fp_res, hm_res, ec_res):
+        res_map = dict(zip(res["itemsets"], res["support"]))
+        assert set(res_map.keys()) == set(ap_map.keys())
+        for iset, supp in ap_map.items():
+            assert res_map[iset] == pytest.approx(supp, abs=1e-9)
 
 
 def test_empty_results_high_threshold(sample_basket):
-    """Verify handling when no itemsets meet the threshold."""
-    ap_res = run_apriori(sample_basket, min_support=0.99)
-    fp_res = run_fpgrowth(sample_basket, min_support=0.99)
-
-    assert ap_res.empty
-    assert fp_res.empty
-    assert list(ap_res.columns) == ["support", "itemsets", "length"]
-    assert list(fp_res.columns) == ["support", "itemsets", "length"]
+    """Verify handling when no itemsets meet the threshold across all 4 algorithms."""
+    for algo in ("apriori", "fpgrowth", "hmine", "eclat"):
+        res = run_algorithm(algo, sample_basket, min_support=0.99)
+        assert res.empty
+        assert list(res.columns) == ["support", "itemsets", "length"]
 
 
 def test_max_len_constraint(sample_basket):
-    """Verify max_len limits the maximum itemset size."""
-    ap_res = run_apriori(sample_basket, min_support=0.2, max_len=1)
-    assert (ap_res["length"] <= 1).all()
+    """Verify max_len limits the maximum itemset size across all 4 algorithms."""
+    for algo in ("apriori", "fpgrowth", "hmine", "eclat"):
+        res_1 = run_algorithm(algo, sample_basket, min_support=0.2, max_len=1)
+        assert (res_1["length"] <= 1).all()
 
-    fp_res = run_fpgrowth(sample_basket, min_support=0.2, max_len=2)
-    assert (fp_res["length"] <= 2).all()
+        res_2 = run_algorithm(algo, sample_basket, min_support=0.2, max_len=2)
+        assert (res_2["length"] <= 2).all()
+
+
+def test_eclat_without_colnames(sample_basket):
+    """Verify ECLAT supports use_colnames=False returning integer column indices."""
+    ec_idx = run_eclat(sample_basket, min_support=0.3, use_colnames=False)
+    ap_idx = run_apriori(sample_basket, min_support=0.3, use_colnames=False)
+    assert set(ec_idx["itemsets"]) == set(ap_idx["itemsets"])
+
+
+def test_unsupported_algorithm_raises(sample_basket):
+    """Verify invalid algorithm key raises ValueError."""
+    with pytest.raises(ValueError, match="Unsupported algorithm"):
+        run_algorithm("invalid_algo", sample_basket, min_support=0.3)
 
 
 def test_compare_algorithms(sample_basket):
-    """Verify algorithm comparison metrics structure and execution."""
-    comp = compare_algorithms(sample_basket, min_support=0.3)
+    """Verify 4-way algorithm comparison metrics, memory stats, and equivalence."""
+    comp = compare_algorithms(
+        sample_basket,
+        min_support=0.3,
+        min_confidence=0.5,
+        min_lift=1.0,
+        include_sweep=True
+    )
 
+    assert comp["identical_itemsets"] is True
+    assert comp["identical_rules"] is True
     assert comp["identical_results"] is True
-    assert "execution_time_seconds" in comp["apriori"]
-    assert "execution_time_seconds" in comp["fpgrowth"]
-    assert comp["apriori"]["itemset_count"] == comp["fpgrowth"]["itemset_count"]
+    assert comp["algorithm_order"] == ["apriori", "fpgrowth", "hmine", "eclat"]
+    assert comp["fastest_algorithm"] in comp["algorithm_order"]
+
+    for key in ("apriori", "fpgrowth", "hmine", "eclat"):
+        algo_stats = comp[key]
+        assert "execution_time_seconds" in algo_stats
+        assert "peak_memory_kb" in algo_stats
+        assert "speedup_vs_apriori" in algo_stats
+        assert "rank_by_speed" in algo_stats
+        assert algo_stats["itemset_count"] == comp["apriori"]["itemset_count"]
+        assert algo_stats["rules_generated_count"] == comp["apriori"]["rules_generated_count"]
+
+    assert "support_sweep" in comp
+    assert len(comp["support_sweep"]) == 5
+
+
+def test_benchmark_support_sweep(sample_basket):
+    """Verify custom threshold sweep returns rows for each threshold."""
+    sweep = benchmark_support_sweep(sample_basket, thresholds=[0.5, 0.3])
+    assert len(sweep) == 2
+    assert sweep[0]["min_support"] == 0.5
+    assert sweep[1]["min_support"] == 0.3
+    for row in sweep:
+        for key in ("apriori", "fpgrowth", "hmine", "eclat"):
+            assert key in row
 
 
 def test_format_itemsets_with_names(sample_basket, sample_catalogue):

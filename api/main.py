@@ -33,6 +33,8 @@ from modules.exploratory_data_analysis import (
     get_synthetic_pattern_distribution,
 )
 from modules.association_mining import (
+    ALGORITHM_ORDER,
+    run_algorithm,
     run_apriori,
     run_fpgrowth,
     compare_algorithms,
@@ -260,15 +262,18 @@ def get_itemsets(
 ):
     basket = get_basket()
     ds = get_datasets()
-    
-    if algorithm == "apriori":
-        raw_itemsets = run_apriori(basket, min_support=min_support, max_len=max_len)
-    else:
-        raw_itemsets = run_fpgrowth(basket, min_support=min_support, max_len=max_len)
-        
+
+    algo_key = algorithm.lower().strip()
+    if algo_key not in ALGORITHM_ORDER:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Unsupported algorithm '{algorithm}'. Choose from: {', '.join(ALGORITHM_ORDER)}"
+        )
+
+    raw_itemsets = run_algorithm(algo_key, basket, min_support=min_support, max_len=max_len)
     formatted = format_itemsets_with_names(raw_itemsets, ds["services"], total_journeys=len(ds["journeys"]))
     return {
-        "algorithm": algorithm,
+        "algorithm": algo_key,
         "count": len(formatted),
         "min_support": min_support,
         "max_len": max_len,
@@ -312,29 +317,44 @@ def get_rules(
 @app.get("/api/mining/compare")
 def compare_mining_algorithms(
     min_support: float = 0.01,
-    max_len: Optional[int] = None
+    max_len: Optional[int] = None,
+    min_confidence: float = 0.30,
+    min_lift: float = 1.0,
+    include_sweep: bool = True
 ):
     basket = get_basket()
-    comparison = compare_algorithms(basket, min_support=min_support, max_len=max_len)
-    
-    # Exclude raw DataFrame for JSON serialization
+    comparison = compare_algorithms(
+        basket,
+        min_support=min_support,
+        max_len=max_len,
+        min_confidence=min_confidence,
+        min_lift=min_lift,
+        include_sweep=include_sweep,
+    )
+
+    def _serialize_algo(entry: Dict[str, Any]) -> Dict[str, Any]:
+        return {k: v for k, v in entry.items() if k != "itemsets"}
+
+    serialized_algos = {
+        key: _serialize_algo(comparison[key])
+        for key in comparison["algorithm_order"]
+    }
+
     res = {
-        "apriori": {
-            "execution_time_seconds": comparison["apriori"]["execution_time_seconds"],
-            "itemset_count": comparison["apriori"]["itemset_count"],
-            "size_distribution": comparison["apriori"]["size_distribution"],
-            "max_itemset_size": comparison["apriori"]["max_itemset_size"],
-        },
-        "fpgrowth": {
-            "execution_time_seconds": comparison["fpgrowth"]["execution_time_seconds"],
-            "itemset_count": comparison["fpgrowth"]["itemset_count"],
-            "size_distribution": comparison["fpgrowth"]["size_distribution"],
-            "max_itemset_size": comparison["fpgrowth"]["max_itemset_size"],
-        },
+        **serialized_algos,
+        "algorithms": [serialized_algos[key] for key in comparison["algorithm_order"]],
+        "algorithm_order": comparison["algorithm_order"],
+        "fastest_algorithm": comparison["fastest_algorithm"],
+        "fastest_algorithm_name": comparison["fastest_algorithm_name"],
+        "identical_itemsets": comparison["identical_itemsets"],
+        "identical_rules": comparison["identical_rules"],
         "identical_results": comparison["identical_results"],
         "speedup_factor": comparison["speedup_factor"],
-        "parameters": comparison["parameters"]
+        "max_speedup_vs_apriori": comparison["max_speedup_vs_apriori"],
+        "parameters": comparison["parameters"],
     }
+    if include_sweep and "support_sweep" in comparison:
+        res["support_sweep"] = comparison["support_sweep"]
     return res
 
 @app.post("/api/recommend")

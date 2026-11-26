@@ -85,10 +85,19 @@ export const api = {
     return handleResponse(res);
   },
 
-  async compareAlgorithms(minSupport = 0.01, maxLen = null) {
+  async compareAlgorithms({
+    minSupport = 0.01,
+    maxLen = null,
+    minConfidence = 0.30,
+    minLift = 1.0,
+    includeSweep = true
+  } = {}) {
     const url = new URL(`${API_BASE}/mining/compare`, window.location.origin);
     url.searchParams.set('min_support', minSupport);
     if (maxLen) url.searchParams.set('max_len', maxLen);
+    url.searchParams.set('min_confidence', minConfidence);
+    url.searchParams.set('min_lift', minLift);
+    url.searchParams.set('include_sweep', includeSweep);
     const res = await fetch(url.toString());
     return handleResponse(res);
   },
